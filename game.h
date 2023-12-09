@@ -25,4 +25,5 @@ typedef struct s_sand
 
 int	on_keypress(int keysim, t_game *game);
 int	on_destroy(t_game *game);
+void	put_pixel(t_sand *sand, t_game *game);
 #endif

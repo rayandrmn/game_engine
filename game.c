@@ -5,10 +5,13 @@
 #include <X11/keysym.h>
 #include "game.h"
 
-
 int	main(void)
 {
 	t_game	game;
+	t_sand	sand;
+
+	sand.x = 0;
+	sand.y = 0;
 
 	game.mlx_ptr = mlx_init();
 	if (!game.mlx_ptr)
@@ -19,7 +22,7 @@ int	main(void)
 	
 	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, &game);
 	mlx_hook(game.win_ptr, DestroyNotify, StructureNotifyMask, &on_destroy, &game);
-
+	put_pixel(&sand, &game);
 	mlx_loop(game.mlx_ptr);
 	return (0);
 }

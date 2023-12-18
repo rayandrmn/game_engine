@@ -1,28 +1,24 @@
+#include "game.h"
 #include "mlx/mlx.h"
-#include <stdlib.h>
-#include <stdio.h>
 #include <X11/X.h>
 #include <X11/keysym.h>
-#include "game.h"
 
 int	main(void)
 {
-	t_game	game;
-	t_sand	sand;
-
-	sand.x = 0;
-	sand.y = 0;
-
+	t_game game;
+	
 	game.mlx_ptr = mlx_init();
 	if (!game.mlx_ptr)
-		return (1);
-	game.win_ptr = mlx_new_window(game.mlx_ptr, 600, 400, "sandbox");
+		return (0);
+	game.win_ptr = mlx_new_window(game.mlx_ptr, 800, 800, "game engine");
 	if (!game.win_ptr)
-		return (free(game.mlx_ptr), 1);
-	
-	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, &game);
+		return (free(game.mlx_ptr), 0);
+
+	init_perso(&game);
+	mlx_loop_hook(game.mlx_ptr, mouvement, &game);
+	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &on_keypress, &game);
 	mlx_hook(game.win_ptr, DestroyNotify, StructureNotifyMask, &on_destroy, &game);
-	put_pixel(&sand, &game);
 	mlx_loop(game.mlx_ptr);
 	return (0);
 }
+
